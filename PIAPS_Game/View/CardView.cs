@@ -21,7 +21,8 @@ public class CardView : Transformable, Drawable
     private Vector2f textXOffset;
     private Vector2f textYOffset;
     private uint fontSize;
-    private Font font = new Font("C:/Users/Leonid/RiderProjects/PIAPS_Game/PIAPS_Game/Resources/Fonts/arial.ttf");
+    //TODO Reference font in settings 
+    private Font font = new Font("C:/Users/Leonid/RiderProjects/PIAPS_Game/PIAPS_Game/Resources/Fonts/arial.ttf"); 
     private Vector2f grabOffset = new Vector2f(0, 0);
     
     private bool isSelected = false;
@@ -106,23 +107,26 @@ public class CardView : Transformable, Drawable
         float maxX = Math.Max(position.X, position.X + this.size.X);
         float minY = Math.Min(position.Y, position.Y + this.size.Y);
         float maxY = Math.Max(position.Y, position.Y + this.size.Y);
+        Console.WriteLine(( x >= minX ) && ( x < maxX ) && ( y >= minY ) && ( y < maxY ));
         return ( x >= minX ) && ( x < maxX ) && ( y >= minY ) && ( y < maxY );
     }
 
 
     public void MousePressed(MouseButtonEventArgs e)
     {
-        if(this.Contains(e.X, e.Y))
+        
+        if(Contains(e.X, e.Y))
         {
-            grabOffset = new Vector2f(e.X - this.Position.X, e.Y - this.Position.Y);
-            this.Scale = new Vector2f(1.2f, 1.2f);
             isSelected = true;
+            grabOffset = new Vector2f(e.X - this.Position.X, e.Y - this.Position.Y);
+            Scale = new Vector2f(1.2f, 1.2f);
         }
     }
     public void MouseMoved(MouseMoveEventArgs e)
     {
-        if(isSelected)
+        if (isSelected)
             Position = new Vector2f(e.X, e.Y) - grabOffset;
+
     }
 
     public void MouseReleased(MouseButtonEventArgs e)

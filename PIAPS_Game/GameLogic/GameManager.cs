@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PIAPS_Game.Map;
 using SFML.System;
 
 namespace PIAPS_Game.GameLogic
@@ -45,11 +46,23 @@ namespace PIAPS_Game.GameLogic
 
             set
             {
-                if (value > _deck.Size)
-                    _playerCardsReciveCount = _deck.Size;
+                if (value > Deck.Size)
+                    _playerCardsReciveCount = Deck.Size;
                 else
                     _playerCardsReciveCount = value;
             }
+        }
+
+        public DeckMap Deck
+        {
+            get => _deck;
+            protected set => _deck = value;
+        }
+
+        public GameMap Field
+        {
+            get => _field;
+            protected set => _field = value;
         }
 
         private Card.AbstractCard reciveCard()
@@ -71,18 +84,18 @@ namespace PIAPS_Game.GameLogic
             else
                 card = _creator.CreateCard();
 
-            card.AddListener(_deck);
-            card.AddListener(_field);
+            card.AddListener(Deck);
+            card.AddListener(Field);
             return card;
         }
 
         public void StartGame()
         {
             
-            for (int i = 0; i < _deck.Size; i++)
+            for (int i = 0; i < Deck.Size; i++)
             {
 
-                _deck.Cards.Add(reciveCard());
+                Deck.Cards.Add(reciveCard());
                 
             }
 
@@ -92,13 +105,13 @@ namespace PIAPS_Game.GameLogic
         {
             for (int i = 0; i < PlayerCardsReciveCount; i++)
             {
-                _deck.Cards.Add(reciveCard());
+                Deck.Cards.Add(reciveCard());
             }
         }
 
         public void PlayersTurn() 
         {
-            List<Card.AbstractCard> actors = _field.Cards.Where(c => !c.IsEnemy).ToList();
+            List<Card.AbstractCard> actors = Field.Cards.Where(c => !c.IsEnemy).ToList();
             actors.OrderBy(c => c.MapPosition.Y);
             foreach (var actor in actors)
             {
@@ -124,7 +137,7 @@ namespace PIAPS_Game.GameLogic
             {
                 Card.AbstractCard card = reciveCard();
                 
-                _field.Cards.Add(card);
+                Field.Cards.Add(card);
             }
             
         }

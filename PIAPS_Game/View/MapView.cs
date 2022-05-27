@@ -15,7 +15,7 @@ public class MapView: Transformable, Drawable
     
     public MapView(float size, Vector2u length, Color backgroundColor, Color foregroundColor)
     {
-        this.Size = new Vector2f(size-(5 * (size/100)),  size/length.X);
+        this.Size = new Vector2f(size-(5 * (size/100)),  size/length.X * length.Y);
         this.length = length;
         background = new RectangleShape(this.Size);
         background.FillColor = backgroundColor;

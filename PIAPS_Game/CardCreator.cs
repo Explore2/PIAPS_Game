@@ -14,6 +14,7 @@ public class CardCreator
         Builder.SetDamage();
         Builder.SetCost();
         Builder.SetTexture();
+        Builder.SetEvents();
         return Builder.GetCard();
     }
     public AbstractCard CreateEliteCard()
@@ -23,6 +24,7 @@ public class CardCreator
         Builder.SetEliteDamage();
         Builder.SetEliteCost();
         Builder.SetTexture();
+        Builder.SetEvents();
         return Builder.GetCard();
     }
 }

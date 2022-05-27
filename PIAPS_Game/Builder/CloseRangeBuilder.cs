@@ -30,11 +30,17 @@ public class CloseRangeBuilder : Builder
 
     public void SetTexture()
     {
-        string projectPath = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-        string foreImagePath = @$"{projectPath}/Resources/BaseCardIcons/closeRange.png";
-        string backImagePath = @$"{projectPath}/Resources/backcard.png";
+        string foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\closeRange.png";
+        string backImagePath = @$"{Settings.ResourcesPath}\backcard.png";
         _card.View = new CardView(new Vector2f(100, 150),  new Image(backImagePath), new Image(foreImagePath), _card.HP, _card.Damage,
             _card.Cost);
+    }
+
+    public void SetEvents()
+    {
+        Settings.Window.MouseButtonPressed += (sender, args) => _card.View.MousePressed(args);
+        Settings.Window.MouseButtonReleased += (sender, args) => _card.View.MouseReleased(args); 
+        Settings.Window.MouseMoved += (sender, args) => _card.View.MouseMoved(args);   
     }
 
     public void SetEliteHP()
