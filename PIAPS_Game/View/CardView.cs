@@ -24,7 +24,7 @@ public class CardView : Transformable, Drawable
     private Vector2f textYOffset;
     private uint fontSize;
     //TODO Reference font in settings 
-    private Font font = new Font("C:/Users/Leonid/RiderProjects/PIAPS_Game/PIAPS_Game/Resources/Fonts/arial.ttf"); 
+    private Font font = new Font($"{Settings.ResourcesPath}/Fonts/arial.ttf"); 
     public Vector2f grabOffset = new Vector2f(0, 0);
     #endregion
     
@@ -71,11 +71,27 @@ public class CardView : Transformable, Drawable
         set => prevPosition = value;
     }
 
-    public new Vector2f Size
+    public Vector2f Size
     {
         get => size;
         set => size = value;
     }
+
+    public int HpText
+    {
+        set
+        {
+            if(value < 0)
+            {
+                hpText.DisplayedString = 0.ToString();
+            }
+            else
+            {
+                hpText.DisplayedString = value.ToString();
+            }
+        }
+    }
+
     #endregion
 
     #region methods
