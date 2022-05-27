@@ -145,7 +145,10 @@ namespace PIAPS_Game.GameLogic
         {
             for (int i = 0; i < PlayerCardsReciveCount; i++)
             {
+                if (Deck.Cards.Count >= Deck.Size.X)
+                    break;
                 Deck.Cards.Add(reciveCard());
+
             }
         }
 
@@ -198,6 +201,24 @@ namespace PIAPS_Game.GameLogic
                 actor.Go();
             }
         }
+
+
+        public void CastleDamage()
+        {
+            List<Card.AbstractCard> cards = Field.GetCardsOnPosition(new Vector2i(0, 0), new Vector2i((int)Field.Size.X, 0));
+            foreach(var card in cards.Where(c=> !c.IsEnemy))
+            {
+                card.ReceiveDamage(20);
+            }
+
+
+            cards = Field.GetCardsOnPosition(new Vector2i(0, (int)Field.Size.Y-1), new Vector2i((int)Field.Size.X, (int)Field.Size.Y-1));
+            foreach(var card in cards.Where(c => c.IsEnemy))
+            {
+                card.ReceiveDamage(20);
+            }
+        }
+
 
         #region TestingGround
 

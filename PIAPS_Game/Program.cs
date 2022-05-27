@@ -56,10 +56,13 @@ while (window.IsOpen)
     {
         
         endTurn = false;
+        GameManager.Instance.CastleDamage();
         GameManager.Instance.PlayersTurn();
         GameManager.Instance.PlayerReciveCards();
         GameManager.Instance.EnemyTurn();
         GameManager.Instance.EnemyReciveCards();
+        
+
     }
         
 
