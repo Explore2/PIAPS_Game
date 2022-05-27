@@ -14,7 +14,7 @@ GameManager.Instance.StartGame();
 while (window.IsOpen)
 {
     window.DispatchEvents();
-    window.Clear(Color.White);
+    window.Clear(Settings.BackgroundColor);
     window.Draw(GameManager.Instance.Deck.View);
     window.Draw(GameManager.Instance.Field.View);
     foreach (var card in GameManager.Instance.Deck.Cards)

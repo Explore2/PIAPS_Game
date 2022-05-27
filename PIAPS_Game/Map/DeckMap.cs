@@ -20,7 +20,7 @@ public class DeckMap : AbstractMap
     public DeckMap(int size)
     {
         Size = size;
-        View = new MapView(Settings.Window.Size.X/1.5f, new Vector2u((uint)size, 1), Color.White, Color.Black);
+        View = new MapView(Settings.Window.Size.X/1.5f, new Vector2u((uint)size, 1), Color.Transparent, Color.Transparent);
         View.Position = new Vector2f(Settings.Window.Size.X / 2 - View.Size.X / 2, Settings.Window.Size.Y - View.Size.Y);
     }
 
