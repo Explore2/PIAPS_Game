@@ -3,7 +3,6 @@
 public class SplashCard : AbstractCard
 {
     //Some kind of view here
-    
     protected override bool Move()
     {
         throw new NotImplementedException();

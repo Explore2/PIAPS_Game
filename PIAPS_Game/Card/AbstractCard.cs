@@ -1,4 +1,5 @@
 ﻿using PIAPS_Game.Observer;
+using PIAPS_Game.View;
 using EventListener = System.Diagnostics.Tracing.EventListener;
 using SFML.System;
 
@@ -27,6 +28,9 @@ public abstract class AbstractCard : EventRaiser
         protected set => _mapPosition = value;
     }
     
+
+    public CardView View;
+
 
     public int HP
     {

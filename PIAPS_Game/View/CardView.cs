@@ -1,13 +1,17 @@
-﻿using SFML.Graphics;
+﻿using System.Drawing;
+using PIAPS_Game.Map;
+using SFML.Graphics;
 using SFML.System;
+using SFML.Window;
+using Color = SFML.Graphics.Color;
 
-namespace PIAPS_Game;
+namespace PIAPS_Game.View;
 
 public class CardView : Transformable, Drawable
 {
     private Vector2f position = new Vector2f(0, 0);
     private Vector2f scale = new Vector2f(1, 1);
-
+    private Vector2f size;
     
     private RectangleShape back;
     private RectangleShape front;
@@ -18,12 +22,16 @@ public class CardView : Transformable, Drawable
     private Vector2f textYOffset;
     private uint fontSize;
     private Font font = new Font("C:/Users/Leonid/RiderProjects/PIAPS_Game/PIAPS_Game/Resources/Fonts/arial.ttf");
- 
+    private Vector2f grabOffset = new Vector2f(0, 0);
+    
+    private bool isSelected = false;
     public CardView(Vector2f size, Image backImage, Image frontImage, int HP, int Damage, int Cost)
     {
         //Create relative sizes and offsets;
         back = new RectangleShape(size); 
         front = new RectangleShape(new Vector2f(size.X, size.X));
+        position = new Vector2f(0, 0);
+        this.size = size;
         SolveSizesAndOffsets(size);
        
 
@@ -47,7 +55,7 @@ public class CardView : Transformable, Drawable
         textXOffset = new Vector2f((2 * size.X)/10, size.X - fontSize);
         textYOffset = new Vector2f(0, fontSize + fontSize/8);
     }
-    public Vector2f Position
+    public new Vector2f Position
     {
         get => position;
         set
@@ -64,12 +72,12 @@ public class CardView : Transformable, Drawable
         }
     }
     
-    public Vector2f Scale
+    public new Vector2f Scale
     {
         get => scale;
         set
         {
-           
+            size = new Vector2f(back.Size.X * value.X, back.Size.Y * value.Y);
             back.Scale = value;
             front.Scale = value;
             SolveSizesAndOffsets(new Vector2f(back.Size.X * value.X, back.Size.Y * value.Y));
@@ -90,5 +98,40 @@ public class CardView : Transformable, Drawable
         target.Draw(hpText);
         target.Draw(damageText);
         target.Draw(costText);
+    }
+
+    public bool Contains(float x, float y)
+    {
+        float minX = Math.Min(position.X, position.X + this.size.X);
+        float maxX = Math.Max(position.X, position.X + this.size.X);
+        float minY = Math.Min(position.Y, position.Y + this.size.Y);
+        float maxY = Math.Max(position.Y, position.Y + this.size.Y);
+        return ( x >= minX ) && ( x < maxX ) && ( y >= minY ) && ( y < maxY );
+    }
+
+
+    public void MousePressed(MouseButtonEventArgs e)
+    {
+        if(this.Contains(e.X, e.Y))
+        {
+            grabOffset = new Vector2f(e.X - this.Position.X, e.Y - this.Position.Y);
+            this.Scale = new Vector2f(1.2f, 1.2f);
+            isSelected = true;
+        }
+    }
+    public void MouseMoved(MouseMoveEventArgs e)
+    {
+        if(isSelected)
+            Position = new Vector2f(e.X, e.Y) - grabOffset;
+    }
+
+    public void MouseReleased(MouseButtonEventArgs e)
+    {
+        if (isSelected)
+        {
+            Scale = new Vector2f(1f, 1f);
+            grabOffset = new Vector2f(0, 0);
+            isSelected = false;
+        }
     }
 }

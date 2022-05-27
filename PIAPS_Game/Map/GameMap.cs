@@ -1,4 +1,6 @@
-﻿namespace PIAPS_Game.Map;
+﻿using PIAPS_Game.View;
+
+namespace PIAPS_Game.Map;
 
 public class GameMap : AbstractMap
 {
