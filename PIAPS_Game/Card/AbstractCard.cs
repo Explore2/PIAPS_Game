@@ -106,6 +106,7 @@ public abstract class AbstractCard : EventRaiser
             IsSelected = true;
             View.grabOffset = new Vector2f(e.X - View.Position.X, e.Y - View.Position.Y);
             View.PrevPosition = View.Position;
+            View.PrevScale = View.Scale;
             View.Scale = new Vector2f(1.2f, 1.2f);
         }
     }
@@ -120,24 +121,28 @@ public abstract class AbstractCard : EventRaiser
     {
         if (IsSelected && e.Button == Mouse.Button.Left)
         {
-            View.Scale = new Vector2f(1f, 1f);
+            View.Scale = View.PrevScale;
             View.grabOffset = new Vector2f(0, 0);
             IsSelected = false;
             var field = GameManager.Instance.Field;
             if (field.View.Contains(e.X, e.Y))
             {
+                bool isFree = false;
                 var coords = field.View.CellContains(e.X, e.Y);
-                bool isFree = field.GetCardOnPosition((Vector2i)coords) == null;
+                if(coords.HasValue)
+                {
+                    isFree = field.GetCardOnPosition((Vector2i)coords) == null;
+                }
+
                 if (coords.Value.Y == field.View.length.Y - 1 && isFree)
                 {
+                    View.Scale = new Vector2f(1, 1);
                     Notify(this, State);
                     State = CardState.InMap;
                     MapPosition = (Vector2i)coords;
                     return;
                 }
-
             }
-
             View.Position = View.PrevPosition;
         }
     }

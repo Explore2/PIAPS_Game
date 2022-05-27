@@ -13,6 +13,7 @@ public class CardView : Transformable, Drawable
     private Vector2f position = new Vector2f(0, 0);
     private Vector2f prevPosition = new Vector2f(0, 0);
     private Vector2f scale = new Vector2f(1, 1);
+    private Vector2f prevScale = new Vector2f(1, 1);
     private Vector2f size;
     
     private RectangleShape back;
@@ -23,7 +24,6 @@ public class CardView : Transformable, Drawable
     private Vector2f textXOffset;
     private Vector2f textYOffset;
     private uint fontSize;
-    //TODO Reference font in settings 
     private Font font = new Font($"{Settings.ResourcesPath}/Fonts/arial.ttf"); 
     public Vector2f grabOffset = new Vector2f(0, 0);
     #endregion
@@ -69,6 +69,12 @@ public class CardView : Transformable, Drawable
     {
         get => prevPosition;
         set => prevPosition = value;
+    }
+
+    public Vector2f PrevScale
+    {
+        get => prevScale;
+        set => prevScale = value;
     }
 
     public Vector2f Size

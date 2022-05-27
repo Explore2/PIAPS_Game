@@ -97,7 +97,6 @@ namespace PIAPS_Game.GameLogic
             card.AddListener(Deck);
             card.AddListener(Field);
             
-            var cards =  GameManager.Instance.Deck.GetCardsOnPosition(new Vector2i(-1, 0), new (Deck.Size.X, 0)).ConvertAll(x => x.MapPosition.X);
             for (int i = 0; i < Deck.Size.X; i++)
             {
                 
