@@ -92,7 +92,8 @@ namespace PIAPS_Game.GameLogic
                 card = _creator.CreateCard();
             Settings.Window.MouseButtonPressed += (sender, args) => card.MousePressed(args);
             Settings.Window.MouseButtonReleased += (sender, args) => card.MouseReleased(args); 
-            Settings.Window.MouseMoved += (sender, args) => card.MouseMoved(args);   
+            Settings.Window.MouseMoved += (sender, args) => card.MouseMoved(args);
+            card.View.Scale =  new Vector2f(_deck.View.CellSize.Y / card.View.Size.Y,_deck.View.CellSize.Y / card.View.Size.Y);
             card.AddListener(Deck);
             card.AddListener(Field);
             

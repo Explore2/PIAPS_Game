@@ -1,4 +1,5 @@
-﻿using PIAPS_Game;
+﻿using System.Drawing;
+using PIAPS_Game;
 using PIAPS_Game.Builder;
 using PIAPS_Game.Card;
 using PIAPS_Game.View;
@@ -13,11 +14,13 @@ GameManager.Instance.StartGame();
 //GameManager.Instance.PlaceCard();
 bool endTurn = false;
 var window = Settings.Window;
-var button = new Button(new Vector2f(50, 50), Color.Green)
+var button = new Button(new Vector2f(100, 100), new Image($"{Settings.ResourcesPath}/buttonNextTurn.png"))
 {
-    Position = (Vector2f)(window.Size - new Vector2u(60, 60)),
+    Position = (Vector2f)(window.Size - new Vector2u(10 + 100,  10 + 100)),
 };
-window.Closed +=  (s,e) =>  window.Close();
+window.MouseButtonPressed += button.OnButtonPress;
+window.MouseButtonReleased += button.OnButtonRelease;
+window.Closed += (s,e) =>  window.Close();
 window.MouseButtonReleased += (s, e) => MouseReleased(e);
 window.SetFramerateLimit(30);
 

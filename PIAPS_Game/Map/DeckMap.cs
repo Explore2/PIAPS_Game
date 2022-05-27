@@ -25,9 +25,6 @@ public class DeckMap : AbstractMap
         View.Position = new Vector2f(Settings.Window.Size.X / 2 - View.Size.X / 2, Settings.Window.Size.Y - View.Size.Y);
     }
 
-
-
-
     public override void Update(AbstractCard sender, CardState eventArgs)
     {
         if (eventArgs == CardState.InDeck)
