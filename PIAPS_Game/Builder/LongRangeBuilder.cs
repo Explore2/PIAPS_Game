@@ -4,6 +4,7 @@ namespace PIAPS_Game.Builder;
 
 public class LongRangeBuilder : Builder
 {
+    private LongRangeCard _card = new LongRangeCard();
     public void Reset()
     {
         throw new NotImplementedException();
@@ -11,17 +12,17 @@ public class LongRangeBuilder : Builder
 
     public void SetHP()
     {
-        throw new NotImplementedException();
+        _card.HP = 30;
     }
 
     public void SetDamage()
     {
-        throw new NotImplementedException();
+        _card.Damage = 20;
     }
 
     public void SetCost()
     {
-        throw new NotImplementedException();
+        _card.Cost = 3;
     }
 
     public void SetTexture()
@@ -31,17 +32,17 @@ public class LongRangeBuilder : Builder
 
     public void SetEliteHP()
     {
-        throw new NotImplementedException();
+        _card.HP = 35;
     }
 
     public void SetEliteDamage()
     {
-        throw new NotImplementedException();
+        _card.Damage = 22;
     }
 
     public void SetEliteCost()
     {
-        throw new NotImplementedException();
+        _card.Cost = 2;
     }
 
     public void SetEliteTexture()
@@ -51,6 +52,6 @@ public class LongRangeBuilder : Builder
 
     public AbstractCard GetCard()
     {
-        throw new NotImplementedException();
+        return _card;
     }
 }

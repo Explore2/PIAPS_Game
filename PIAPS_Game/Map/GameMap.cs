@@ -2,5 +2,8 @@
 
 public class GameMap : AbstractMap
 {
-    
+    public override void Update<TSender, TEventArgs>(TSender sender, TEventArgs eventArgs)
+    {
+        throw new NotImplementedException();
+    }
 }
