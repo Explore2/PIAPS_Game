@@ -29,6 +29,16 @@ public class LongRangeCard : AbstractCard
         }
 
 
+        if (wantedMove.Y < 0)
+        {
+            wantedMove.Y = 0;
+        }
+
+        if (wantedMove.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            wantedMove.Y = (int)(GameManager.Instance.Field.Size.Y - 1);
+        }
+
 
         if (wantedMove != MapPosition)
         {
@@ -47,16 +57,41 @@ public class LongRangeCard : AbstractCard
         bool success = false;
         int moveSign = (!IsEnemy ? -1 : 1);
 
-        Vector2i attackPosition = new Vector2i(MapPosition.X, MapPosition.Y + (moveSign));
+        Vector2i attackPosition = new Vector2i(MapPosition.X, MapPosition.Y + (2*moveSign));
         Console.WriteLine($"Атакую по {attackPosition}");
-        AbstractCard target = GameManager.Instance.Field.GetCardOnPosition(attackPosition);
+        
 
-        if (target != null && IsEnemy != target.IsEnemy)
+
+        List<AbstractCard> target = GameManager.Instance.Field.GetCardsOnPosition(MapPosition, attackPosition);
+        if (IsEnemy)
         {
-            success = true;
-            target.ReceiveDamage(Damage);
-            Console.WriteLine($"Нанёс {Damage} урона");
+            target = target.OrderBy(t => t.MapPosition.Y).ToList();
         }
+        else
+        {
+            target = target.OrderByDescending(t => t.MapPosition.Y).ToList();
+        }
+
+        foreach (var enemy in target)
+        {
+            if (IsEnemy != enemy.IsEnemy)
+            {
+                success = true;
+                enemy.ReceiveDamage(Damage);
+                Console.WriteLine($"Нанёс {Damage} урона");
+                return success;
+            } 
+        }
+
+        if (IsEnemy && attackPosition.Y < 0)
+        {
+            GameManager.Instance.PlayerHP -= Damage;
+        }
+        else if (!IsEnemy && attackPosition.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            GameManager.Instance.EnemyHP -= Damage;
+        }
+
 
         return success;
     }
