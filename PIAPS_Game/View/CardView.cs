@@ -25,8 +25,9 @@ public class CardView : Transformable, Drawable
     private uint fontSize;
     //TODO Reference font in settings 
     private Font font = new Font(Settings.ResourcesPath + @"/Fonts/arial.ttf"); 
-    private Vector2f grabOffset = new Vector2f(0, 0);
-    
+    public Vector2f grabOffset = new Vector2f(0, 0);
+    #endregion
+
     #region properties
     public new Vector2f Position
     {

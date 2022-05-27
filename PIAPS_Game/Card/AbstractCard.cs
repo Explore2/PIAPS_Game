@@ -9,7 +9,7 @@ namespace PIAPS_Game.Card;
 
 public abstract class AbstractCard : EventRaiser
 {
-    protected CardState State;
+    public CardState State; //TODO Исправить
     protected int _hp;
     protected int _damage;
     protected int _cost;
@@ -27,7 +27,7 @@ public abstract class AbstractCard : EventRaiser
     public Vector2i MapPosition
     {
         get => _mapPosition;
-        protected set
+        set
         {
             _mapPosition = value;
             AbstractMap field;
@@ -73,6 +73,13 @@ public abstract class AbstractCard : EventRaiser
     protected abstract bool Move();
 
     protected abstract bool Attack();
+
+    public void ReceiveDamage(int damage)
+    {
+        HP -= damage;
+        if (HP < 0)
+            Notify(State);
+    }
     
     
     public void MousePressed(MouseButtonEventArgs e)
