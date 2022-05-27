@@ -74,8 +74,22 @@ namespace PIAPS_Game.GameLogic
         }
 
 
-        public int PlayerHP { get { return _playerHP; } set { _playerHP = value; } }
-        public int EnemyHP { get { return _enemyHP; } set { _enemyHP = value; } }
+        public int PlayerHP { get { return _playerHP; } set 
+            {
+                _playerHP = value;
+                if (_playerHP < 0)
+                    Console.WriteLine("U suck");
+                Console.WriteLine($" player HP {value}");
+            }
+        }
+        public int EnemyHP { get { return _enemyHP; } set 
+            {
+                _enemyHP = value;
+                if (_enemyHP < 0)
+                    Console.WriteLine("U win LOOSER");
+                Console.WriteLine($" Enemy HP {value}");
+            }
+        }
 
         private Card.AbstractCard reciveCard()
 
@@ -121,7 +135,7 @@ namespace PIAPS_Game.GameLogic
             for (int i = 0; i < Deck.Size.X; i++)
             {
 
-                Deck.Cards.Add(receiveCard());
+                Deck.Cards.Add(reciveCard());
                 
             }
 
@@ -131,7 +145,7 @@ namespace PIAPS_Game.GameLogic
         {
             for (int i = 0; i < PlayerCardsReciveCount; i++)
             {
-                Deck.Cards.Add(receiveCard());
+                Deck.Cards.Add(reciveCard());
             }
         }
 
@@ -148,6 +162,30 @@ namespace PIAPS_Game.GameLogic
 
         public void EnemyReciveCards()
         {
+
+            #region. 
+            isCreatingEnemy = true;
+            
+            #endregion
+            for (int i = 0; i < Field.Size.X; i++)
+            {
+                if (_random.Next(2) == 1)
+                    continue;
+
+                var position = new Vector2i(i, 0);
+                var card = reciveCard();
+                card.State = CardState.InMap;
+                if (Field.GetCardOnPosition(position) is null)
+                    card.MapPosition = position;
+                else
+                    continue;
+
+                Field.Cards.Add(card);
+            }
+            #region .
+            isCreatingEnemy = false;
+            #endregion
+           
 
         }
         

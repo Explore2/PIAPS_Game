@@ -129,18 +129,19 @@ public abstract class AbstractCard : EventRaiser
             {
                 bool isFree = false;
                 var coords = field.View.CellContains(e.X, e.Y);
-                if(coords.HasValue)
+                if (coords.HasValue)
                 {
                     isFree = field.GetCardOnPosition((Vector2i)coords) == null;
-                }
 
-                if (coords.Value.Y == field.View.length.Y - 1 && isFree)
-                {
-                    View.Scale = new Vector2f(1, 1);
-                    Notify(this, State);
-                    State = CardState.InMap;
-                    MapPosition = (Vector2i)coords;
-                    return;
+
+                    if (coords.Value.Y == field.View.length.Y - 1 && isFree)
+                    {
+                        View.Scale = new Vector2f(1, 1);
+                        Notify(this, State);
+                        State = CardState.InMap;
+                        MapPosition = (Vector2i)coords;
+                        return;
+                    }
                 }
             }
             View.Position = View.PrevPosition;

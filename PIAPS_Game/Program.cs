@@ -23,6 +23,7 @@ window.MouseButtonReleased += button.OnButtonRelease;
 window.Closed += (s,e) =>  window.Close();
 window.MouseButtonReleased += (s, e) => MouseReleased(e);
 window.SetFramerateLimit(30);
+GameManager.Instance.EnemyReciveCards();
 
 while (window.IsOpen)
 {
@@ -35,6 +36,7 @@ while (window.IsOpen)
     window.Draw(GameManager.Instance.Deck.View);
     window.Draw(GameManager.Instance.Field.View);
 
+    
 
     foreach (var card in GameManager.Instance.Deck.Cards)
     {
@@ -52,8 +54,12 @@ while (window.IsOpen)
     window.Display();
     if (endTurn)
     {
+        
         endTurn = false;
         GameManager.Instance.PlayersTurn();
+        GameManager.Instance.PlayerReciveCards();
+        GameManager.Instance.EnemyTurn();
+        GameManager.Instance.EnemyReciveCards();
     }
         
 
