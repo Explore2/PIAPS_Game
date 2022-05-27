@@ -1,4 +1,7 @@
 ﻿using PIAPS_Game.Card;
+using PIAPS_Game.View;
+using SFML.Graphics;
+using SFML.System;
 
 namespace PIAPS_Game.Builder;
 
@@ -27,7 +30,10 @@ public class LongRangeBuilder : Builder
 
     public void SetTexture()
     {
-        throw new NotImplementedException();
+        string foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\longRange.png";
+        string backImagePath = @$"{Settings.ResourcesPath}\backcard.png";
+        _card.View = new CardView(new Vector2f(100, 150),  new Image(backImagePath), new Image(foreImagePath), _card.HP, _card.Damage,
+            _card.Cost);
     }
 
     public void SetEliteHP()
@@ -49,6 +55,7 @@ public class LongRangeBuilder : Builder
     {
         throw new NotImplementedException();
     }
+    
 
     public AbstractCard GetCard()
     {
