@@ -9,7 +9,7 @@ namespace PIAPS_Game.View;
 
 public class CardView : Transformable, Drawable
 {
-    #region fields
+    #region Fields
     private Vector2f position = new Vector2f(0, 0);
     private Vector2f prevPosition = new Vector2f(0, 0);
     private Vector2f scale = new Vector2f(1, 1);
@@ -28,7 +28,7 @@ public class CardView : Transformable, Drawable
     public Vector2f grabOffset = new Vector2f(0, 0);
     #endregion
     
-    #region properties
+    #region Properties
     public new Vector2f Position
     {
         get => position;
@@ -85,7 +85,7 @@ public class CardView : Transformable, Drawable
 
     #endregion
 
-    #region methods
+    #region Methods
     public CardView(Vector2f size, Image backImage, Image frontImage, int HP, int Damage, int Cost)
     {
         back = new RectangleShape(size); 

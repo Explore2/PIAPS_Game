@@ -6,6 +6,8 @@ namespace PIAPS_Game;
 
 public class Button : Transformable, Drawable
 {
+    #region fields
+
     private RectangleShape button;
     private RectangleShape foreground;
     private Vector2f position;
@@ -13,20 +15,10 @@ public class Button : Transformable, Drawable
     private Vector2f size;
     private Texture buttonBackGround = new Texture($"{Settings.ResourcesPath}/buttonBackGround.png");
     private Texture buttonPressedBackGround = new Texture($"{Settings.ResourcesPath}/buttonPressedBackGround.png");
-    public Button(Vector2f size, Image foreGround)
-    {
-        this.size = size;
-        button = new RectangleShape()
-        {
-            Size = size,
-            Texture = buttonBackGround
-        };
-        foreground = new RectangleShape(new Vector2f(size.Y-size.Y/10, size.Y-size.Y/10))
-        {
-            Position = new Vector2f(Size.X/2 + Size.Y/2, Size.Y/2 + Size.Y/2),
-            Texture = new Texture(foreGround)
-        };
-    }
+
+    #endregion
+
+    #region Properties
 
     public new Vector2f Position
     {
@@ -45,7 +37,7 @@ public class Button : Transformable, Drawable
         set {
             scale = value;
             button.Scale = value;
-            }
+        }
     }
 
     public Vector2f Size
@@ -53,7 +45,25 @@ public class Button : Transformable, Drawable
         get => size;
     }
 
+    #endregion
 
+    #region Methods
+
+    public Button(Vector2f size, Image foreGround)
+    {
+        this.size = size;
+        button = new RectangleShape()
+        {
+            Size = size,
+            Texture = buttonBackGround
+        };
+        foreground = new RectangleShape(new Vector2f(size.Y-size.Y/10, size.Y-size.Y/10))
+        {
+            Position = new Vector2f(Size.X/2 + Size.Y/2, Size.Y/2 + Size.Y/2),
+            Texture = new Texture(foreGround)
+        };
+    }
+    
     public void Draw(RenderTarget target, RenderStates states)
     {
         target.Draw(button);
@@ -80,4 +90,7 @@ public class Button : Transformable, Drawable
         if(e.Button == Mouse.Button.Left && button.Texture != buttonBackGround)
             button.Texture = buttonBackGround;
     }
+
+    #endregion
+
 }

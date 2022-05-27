@@ -5,8 +5,7 @@ namespace PIAPS_Game.Card;
 
 public class CloseRangeCard : AbstractCard
 {
-    //Some kind of view here
-    
+
     protected override bool Move()
     {
         bool success = false;
