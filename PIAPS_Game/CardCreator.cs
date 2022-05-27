@@ -17,7 +17,7 @@ public class CardCreator
     }
     public AbstractCard CreateEliteCard()
     {
-        Builder.Reset
+        Builder.Reset();
         Builder.SetEliteHP();
         Builder.SetEliteDamage();
         Builder.SetEliteCost();
