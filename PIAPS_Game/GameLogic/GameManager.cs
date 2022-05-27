@@ -83,11 +83,9 @@ namespace PIAPS_Game.GameLogic
                 card = _creator.CreateEliteCard();
             else
                 card = _creator.CreateCard();
-
-            Settings.Window.MouseButtonPressed += (sender, args) => card.View.MousePressed(args);
-            Settings.Window.MouseButtonReleased += (sender, args) => card.View.MouseReleased(args);
-            Settings.Window.MouseMoved += (sender, args) => card.View.MouseMoved(args);
-
+            Settings.Window.MouseButtonPressed += (sender, args) => card.MousePressed(args);
+            Settings.Window.MouseButtonReleased += (sender, args) => card.MouseReleased(args); 
+            Settings.Window.MouseMoved += (sender, args) => card.MouseMoved(args);   
             card.AddListener(Deck);
             card.AddListener(Field);
             return card;

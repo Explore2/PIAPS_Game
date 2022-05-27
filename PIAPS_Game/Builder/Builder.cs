@@ -8,7 +8,6 @@ public interface Builder
    public void SetDamage();
    public void SetCost();
    public void SetTexture();
-   public void SetEvents();
    public void SetEliteHP();
    public void SetEliteDamage();
    public void SetEliteCost();

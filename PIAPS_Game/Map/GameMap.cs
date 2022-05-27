@@ -19,7 +19,7 @@ public class GameMap : AbstractMap
     public GameMap(Vector2u size)
     {
         Size = size;
-        View = new MapView(Settings.Window.Size.X, size, Color.White, Color.Black);
+        View = new MapView(Settings.Window.Size.X, size, Color.Transparent, Color.Transparent);
         View.Position = new Vector2f(Settings.Window.Size.X / 2 - View.Size.X / 2, Settings.Window.Size.Y/2 - View.Size.Y/2);
     }
 

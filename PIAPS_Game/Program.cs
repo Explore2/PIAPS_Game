@@ -12,22 +12,13 @@ GameManager.Instance.StartGame();
 GameManager.Instance.PlaceCard();
 while (true)
 {
-    GameManager.Instance.PlayersTurn();
-    GameManager.Instance.EnemyTurn();
+    window.DispatchEvents();
+    window.Clear(Settings.BackgroundColor);
+    window.Draw(GameManager.Instance.Deck.View);
+    window.Draw(GameManager.Instance.Field.View);
+    foreach (var card in GameManager.Instance.Deck.Cards)
+    {
+        window.Draw(card.View);
+    }
+    window.Display();
 }
-
-//var window = Settings.Window;
-//window.Closed += (sender, eventArgs) => window.Close();
-//GameManager.Instance.StartGame();
-//while (window.IsOpen)
-//{
-//    window.DispatchEvents();
-//    window.Clear(Color.White);
-//    window.Draw(GameManager.Instance.Deck.View);
-//    window.Draw(GameManager.Instance.Field.View);
-//    foreach (var card in GameManager.Instance.Deck.Cards)
-//    {
-//        window.Draw(card.View);
-//    }
-//    window.Display();
-//}

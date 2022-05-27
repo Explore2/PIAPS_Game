@@ -56,13 +56,6 @@ public class SplashBuilder : Builder
         throw new NotImplementedException();
     }
     
-    public void SetEvents()
-    {
-        Settings.Window.MouseButtonPressed += (sender, args) => _card.View.MousePressed(args);
-        Settings.Window.MouseButtonReleased += (sender, args) => _card.View.MouseReleased(args); 
-        Settings.Window.MouseMoved += (sender, args) => _card.View.MouseMoved(args);   
-    }
-
     public AbstractCard GetCard()
     {
         return _card;
