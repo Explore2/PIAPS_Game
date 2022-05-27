@@ -31,7 +31,8 @@ namespace PIAPS_Game.GameLogic
 
 
 
-
+        protected int _playerHP = 300;
+        protected int _enemyHP = 300;
         protected int _playerCardsReciveCount = 1;
         protected Map.DeckMap _deck = new Map.DeckMap();
         protected Map.GameMap _field = new Map.GameMap();
@@ -140,17 +141,18 @@ namespace PIAPS_Game.GameLogic
 
         public void PlaceCard()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 2; i++)
             {
                 CardCreator creator = new CardCreator();
                 creator.Builder = new Builder.CloseRangeBuilder();
                 Card.AbstractCard card = creator.CreateCard();
+                card.State = CardState.InMap;
                 if (i == 3) {
                 card.IsEnemy = true;
                     card.MapPosition = new Vector2i(0,1);
                 }
                 else
-                    card.MapPosition = new Vector2i(0, 4 - i);
+                    card.MapPosition = new Vector2i(0, 3 - i);
                 Field.Cards.Add(card);
             }
             

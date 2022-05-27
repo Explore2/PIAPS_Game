@@ -27,7 +27,7 @@ public abstract class AbstractCard : EventRaiser
     public Vector2i MapPosition
     {
         get => _mapPosition;
-         set
+        set
         {
             _mapPosition = value;
             AbstractMap field;
@@ -73,6 +73,13 @@ public abstract class AbstractCard : EventRaiser
     protected abstract bool Move();
 
     protected abstract bool Attack();
+
+    public void ReceiveDamage(int damage)
+    {
+        HP -= damage;
+        if (HP < 0)
+            Notify(State);
+    }
     
     
     public void MousePressed(MouseButtonEventArgs e)

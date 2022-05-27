@@ -27,6 +27,16 @@ public class CloseRangeCard : AbstractCard
                 wantedMove.Y = obstacles.Max(obstacle => obstacle.MapPosition.Y) - moveSign;
         }
            
+        if (wantedMove.Y < 0)
+        {
+            wantedMove.Y = 0;
+        }
+
+        if (wantedMove.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            wantedMove.Y = (int)(GameManager.Instance.Field.Size.Y - 1);
+        }
+
 
 
         if (wantedMove != MapPosition)
