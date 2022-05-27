@@ -4,10 +4,10 @@ namespace PIAPS_Game.Builder;
 
 public class CloseRangeBuilder : Builder
 {
-    private CloseRangeCard _card = new CloseRangeCard();
+    private CloseRangeCard _card;
     public void Reset()
     {
-        throw new NotImplementedException();
+        _card = new CloseRangeCard();
     }
 
     public void SetHP()

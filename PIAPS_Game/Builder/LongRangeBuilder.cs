@@ -4,10 +4,10 @@ namespace PIAPS_Game.Builder;
 
 public class LongRangeBuilder : Builder
 {
-    private LongRangeCard _card = new LongRangeCard();
+    private LongRangeCard _card;
     public void Reset()
     {
-        throw new NotImplementedException();
+        _card = new LongRangeCard();
     }
 
     public void SetHP()

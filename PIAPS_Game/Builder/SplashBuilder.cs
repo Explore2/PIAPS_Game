@@ -4,10 +4,10 @@ namespace PIAPS_Game.Builder;
 
 public class SplashBuilder : Builder
 {
-    private SplashCard _card = new SplashCard();
+    private SplashCard _card;
     public void Reset()
     {
-        throw new NotImplementedException();
+       _card = new SplashCard();
     }
 
     public void SetHP()

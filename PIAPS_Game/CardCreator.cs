@@ -9,6 +9,7 @@ public class CardCreator
 
     public AbstractCard CreateCard()
     {
+        Builder.Reset();
         Builder.SetHP();
         Builder.SetDamage();
         Builder.SetCost();
@@ -16,6 +17,7 @@ public class CardCreator
     }
     public AbstractCard CreateEliteCard()
     {
+        Builder.Reset
         Builder.SetEliteHP();
         Builder.SetEliteDamage();
         Builder.SetEliteCost();
