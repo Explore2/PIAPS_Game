@@ -22,7 +22,7 @@ public class CardView : Transformable, Drawable
     private Vector2f textYOffset;
     private uint fontSize;
     //TODO Reference font in settings 
-    private Font font = new Font("C:/Users/Leonid/RiderProjects/PIAPS_Game/PIAPS_Game/Resources/Fonts/arial.ttf"); 
+    private Font font = new Font(Settings.ResourcesPath + @"/Fonts/arial.ttf"); 
     private Vector2f grabOffset = new Vector2f(0, 0);
     
     private bool isSelected = false;

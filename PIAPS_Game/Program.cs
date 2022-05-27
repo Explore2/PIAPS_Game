@@ -8,18 +8,26 @@ using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 
-var window = Settings.Window;
-window.Closed += (sender, eventArgs) => window.Close();
 GameManager.Instance.StartGame();
-while (window.IsOpen)
+GameManager.Instance.PlaceCard();
+while (true)
 {
-    window.DispatchEvents();
-    window.Clear(Color.White);
-    window.Draw(GameManager.Instance.Deck.View);
-    window.Draw(GameManager.Instance.Field.View);
-    foreach (var card in GameManager.Instance.Deck.Cards)
-    {
-        window.Draw(card.View);
-    }
-    window.Display();
+    GameManager.Instance.PlayersTurn();
+    GameManager.Instance.EnemyTurn();
 }
+
+//var window = Settings.Window;
+//window.Closed += (sender, eventArgs) => window.Close();
+//GameManager.Instance.StartGame();
+//while (window.IsOpen)
+//{
+//    window.DispatchEvents();
+//    window.Clear(Color.White);
+//    window.Draw(GameManager.Instance.Deck.View);
+//    window.Draw(GameManager.Instance.Field.View);
+//    foreach (var card in GameManager.Instance.Deck.Cards)
+//    {
+//        window.Draw(card.View);
+//    }
+//    window.Display();
+//}

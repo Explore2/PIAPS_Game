@@ -84,6 +84,10 @@ namespace PIAPS_Game.GameLogic
             else
                 card = _creator.CreateCard();
 
+            Settings.Window.MouseButtonPressed += (sender, args) => card.View.MousePressed(args);
+            Settings.Window.MouseButtonReleased += (sender, args) => card.View.MouseReleased(args);
+            Settings.Window.MouseMoved += (sender, args) => card.View.MouseMoved(args);
+
             card.AddListener(Deck);
             card.AddListener(Field);
             return card;
@@ -112,7 +116,7 @@ namespace PIAPS_Game.GameLogic
         public void PlayersTurn() 
         {
             List<Card.AbstractCard> actors = Field.Cards.Where(c => !c.IsEnemy).ToList();
-            actors.OrderBy(c => c.MapPosition.Y);
+            actors = actors.OrderBy(c => c.MapPosition.Y).ToList();
             foreach (var actor in actors)
             {
                 actor.Go();
@@ -126,17 +130,29 @@ namespace PIAPS_Game.GameLogic
         
         public void EnemyTurn()
         {
-
+            List<Card.AbstractCard> actors = Field.Cards.Where(c => c.IsEnemy).ToList();
+            actors = actors.OrderByDescending(c => c.MapPosition.Y).ToList();
+            foreach (var actor in actors)
+            {
+                actor.Go();
+            }
         }
 
         #region TestingGround
 
         public void PlaceCard()
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-                Card.AbstractCard card = reciveCard();
-                
+                CardCreator creator = new CardCreator();
+                creator.Builder = new Builder.CloseRangeBuilder();
+                Card.AbstractCard card = creator.CreateCard();
+                if (i == 3) {
+                card.IsEnemy = true;
+                    card.MapPosition = new Vector2i(0,1);
+                }
+                else
+                    card.MapPosition = new Vector2i(0, 4 - i);
                 Field.Cards.Add(card);
             }
             
