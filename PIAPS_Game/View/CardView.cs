@@ -71,27 +71,11 @@ public class CardView : Transformable, Drawable
         set => prevPosition = value;
     }
 
-    public Vector2f Size
+    public new Vector2f Size
     {
         get => size;
         set => size = value;
     }
-
-    public int HpText
-    {
-        set
-        {
-            if(value < 0)
-            {
-                hpText.DisplayedString = 0.ToString();
-            }
-            else
-            {
-                hpText.DisplayedString = value.ToString();
-            }
-        }
-    }
-
     #endregion
 
     #region methods

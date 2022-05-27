@@ -1,4 +1,5 @@
-﻿using PIAPS_Game.View;
+﻿using PIAPS_Game.Card;
+using PIAPS_Game.View;
 using SFML.Graphics;
 using SFML.System;
 
@@ -21,6 +22,11 @@ public class GameMap : AbstractMap
         View = new MapView(Settings.Window.Size.X, size, Color.Transparent, Color.Transparent);
         View.Position = new Vector2f(Settings.Window.Size.X / 2 - View.Size.X / 2, Settings.Window.Size.Y/2 - View.Size.Y/2);
     }
+
+    
+
+
+
     public override void Update<TSender, TEventArgs>(TSender sender, TEventArgs eventArgs)
     {
         throw new NotImplementedException();
