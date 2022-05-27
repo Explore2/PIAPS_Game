@@ -14,7 +14,7 @@ public class LongRangeCard : AbstractCard
         int moveSign = !IsEnemy ? -1 : 1;
 
 
-        Console.WriteLine($"Начинаю ходить с {MapPosition.ToString()}");
+        
         Vector2i wantedMove = new Vector2i(MapPosition.X, MapPosition.Y + (moveSign));
 
 
@@ -29,6 +29,16 @@ public class LongRangeCard : AbstractCard
         }
 
 
+        if (wantedMove.Y < 0)
+        {
+            wantedMove.Y = 0;
+        }
+
+        if (wantedMove.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            wantedMove.Y = (int)(GameManager.Instance.Field.Size.Y - 1);
+        }
+
 
         if (wantedMove != MapPosition)
         {
@@ -36,7 +46,7 @@ public class LongRangeCard : AbstractCard
             MapPosition = wantedMove;
         }
 
-        Console.WriteLine($"Пришёл в {MapPosition.ToString()}");
+        
 
         return success;
     }
@@ -47,16 +57,39 @@ public class LongRangeCard : AbstractCard
         bool success = false;
         int moveSign = (!IsEnemy ? -1 : 1);
 
-        Vector2i attackPosition = new Vector2i(MapPosition.X, MapPosition.Y + (moveSign));
-        Console.WriteLine($"Атакую по {attackPosition}");
-        AbstractCard target = GameManager.Instance.Field.GetCardOnPosition(attackPosition);
+        Vector2i attackPosition = new Vector2i(MapPosition.X, MapPosition.Y + (2*moveSign));
+        
 
-        if (target != null && IsEnemy != target.IsEnemy)
+
+        List<AbstractCard> target = GameManager.Instance.Field.GetCardsOnPosition(MapPosition, attackPosition);
+        if (IsEnemy)
         {
-            success = true;
-            target.ReceiveDamage(Damage);
-            Console.WriteLine($"Нанёс {Damage} урона");
+            target = target.OrderBy(t => t.MapPosition.Y).ToList();
         }
+        else
+        {
+            target = target.OrderByDescending(t => t.MapPosition.Y).ToList();
+        }
+
+        foreach (var enemy in target)
+        {
+            if (IsEnemy != enemy.IsEnemy)
+            {
+                success = true;
+                enemy.ReceiveDamage(Damage);
+                return success;
+            } 
+        }
+
+        if (!IsEnemy && attackPosition.Y < 0)
+        {
+            GameManager.Instance.EnemyHP -= Damage;
+        }
+        else if (IsEnemy && attackPosition.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            GameManager.Instance.PlayerHP -= Damage;
+        }
+
 
         return success;
     }

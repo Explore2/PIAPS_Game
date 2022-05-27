@@ -131,7 +131,9 @@ public abstract class AbstractCard : EventRaiser
                 var coords = field.View.CellContains(e.X, e.Y);
                 if(coords.HasValue)
                 {
-                    isFree = field.GetCardOnPosition((Vector2i)coords) == null; 
+                    isFree = field.GetCardOnPosition((Vector2i)coords) == null;
+
+
                     if (coords.Value.Y == field.View.length.Y - 1 && isFree)
                     {
                         View.Scale = new Vector2f(1, 1);
