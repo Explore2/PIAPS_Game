@@ -56,6 +56,18 @@ public class CloseRangeCard : AbstractCard
         
         Vector2i attackPosition = new Vector2i(MapPosition.X,MapPosition.Y + (moveSign) );
         Console.WriteLine($"Атакую по {attackPosition}");
+        if(IsEnemy && attackPosition.Y < 0)
+        {
+            GameManager.Instance.PlayerHP -= Damage;
+            return true;
+        }
+        else if (!IsEnemy && attackPosition.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            GameManager.Instance.EnemyHP -= Damage;
+            return true;
+        }
+            
+
         AbstractCard target = GameManager.Instance.Field.GetCardOnPosition(attackPosition);
 
         if (target != null && IsEnemy != target.IsEnemy)

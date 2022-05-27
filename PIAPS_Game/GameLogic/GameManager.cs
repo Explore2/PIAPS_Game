@@ -39,6 +39,7 @@ namespace PIAPS_Game.GameLogic
 
         protected int _playerHP = 300;
         protected int _enemyHP = 300;
+       
         protected int _playerCardsReciveCount = 1;
         protected Map.DeckMap _deck = new Map.DeckMap();
         protected Map.GameMap _field = new Map.GameMap();
@@ -72,7 +73,12 @@ namespace PIAPS_Game.GameLogic
             protected set => _field = value;
         }
 
-        private Card.AbstractCard receiveCard()
+
+        public int PlayerHP { get { return _playerHP; } set { _playerHP = value; } }
+        public int EnemyHP { get { return _enemyHP; } set { _enemyHP = value; } }
+
+        private Card.AbstractCard reciveCard()
+
         {
             if (_builders.Count == 0)
             {
@@ -131,6 +137,7 @@ namespace PIAPS_Game.GameLogic
 
         public void PlayersTurn() 
         {
+
             List<Card.AbstractCard> actors = Field.Cards.Where(c => !c.IsEnemy).ToList();
             actors = actors.OrderBy(c => c.MapPosition.Y).ToList();
             foreach (var actor in actors)
@@ -158,15 +165,31 @@ namespace PIAPS_Game.GameLogic
 
         public void PlaceCard()
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 5; i++)
             {
-                CardCreator creator = new CardCreator();
-                creator.Builder = new Builder.CloseRangeBuilder();
-                Card.AbstractCard card = creator.CreateCard();
-                card.State = CardState.InMap;
-                if (i == 3) {
-                card.IsEnemy = true;
-                    card.MapPosition = new Vector2i(0,1);
+                Card.AbstractCard card;
+                if (i == 2)
+                {
+                    CardCreator creator = new CardCreator();
+                    creator.Builder = new Builder.SplashBuilder();
+                    card = creator.CreateCard();
+                    card.State = CardState.InMap;
+                }
+                else
+                {
+                    CardCreator creator = new CardCreator();
+                    creator.Builder = new Builder.CloseRangeBuilder();
+                    card = creator.CreateCard();
+                    card.State = CardState.InMap;
+                }
+               
+
+
+                if (i >= 3) 
+                {
+                    card.IsEnemy = true;
+
+                    card.MapPosition = new Vector2i(i-3,0);
                 }
                 else
                     card.MapPosition = new Vector2i(0, 3 - i);

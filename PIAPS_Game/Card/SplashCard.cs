@@ -27,6 +27,15 @@ public class SplashCard : AbstractCard
         }
 
 
+        if (wantedMove.Y < 0)
+        {
+            wantedMove.Y = 0;
+        }
+
+        if (wantedMove.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            wantedMove.Y = (int)(GameManager.Instance.Field.Size.Y - 1);
+        }
 
         if (wantedMove != MapPosition)
         {
@@ -42,6 +51,39 @@ public class SplashCard : AbstractCard
 
     protected override bool Attack()
     {
-        throw new NotImplementedException();
+        bool success = false;
+        int moveSign = (!IsEnemy ? -1 : 1);
+
+        Vector2i attackPosition1 = new Vector2i(MapPosition.X-2, MapPosition.Y + moveSign);
+        Vector2i attackPosition2 = new Vector2i(MapPosition.X + 1, MapPosition.Y + moveSign);
+        Console.WriteLine($"Атакую от {attackPosition1} до {attackPosition2}");
+
+
+
+        List<AbstractCard> target = GameManager.Instance.Field.GetCardsOnPosition(attackPosition1, attackPosition2);
+        
+
+        foreach (var enemy in target)
+        {
+            if (IsEnemy != enemy.IsEnemy)
+            {
+                success = true;
+                enemy.ReceiveDamage(Damage);
+                Console.WriteLine($"Нанёс {Damage} урона");
+ 
+            }
+        }
+
+        if (IsEnemy && attackPosition1.Y < 0)
+        {
+            GameManager.Instance.PlayerHP -= Damage * 3;
+        }
+        else if (!IsEnemy && attackPosition1.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            GameManager.Instance.EnemyHP -= Damage * 3;
+        }
+
+
+        return success;
     }
 }
