@@ -1,5 +1,6 @@
 ﻿using PIAPS_Game.Observer;
 using EventListener = System.Diagnostics.Tracing.EventListener;
+using SFML.System;
 
 namespace PIAPS_Game.Card;
 
@@ -9,6 +10,16 @@ public abstract class AbstractCard : EventRaiser
     protected int _hp;
     protected int _damage;
     protected int _cost;
+    protected Vector2i _mapPosition;
+
+
+
+    public Vector2i MapPosition
+    {
+        get => _mapPosition;
+        protected set => _mapPosition = value;
+    }
+    
 
     public int HP
     {
