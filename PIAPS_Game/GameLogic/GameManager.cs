@@ -8,10 +8,16 @@ using SFML.System;
 
 namespace PIAPS_Game.GameLogic
 {
-
+    
 
     internal class GameManager
     {
+        #region 
+
+        public static bool isCreatingEnemy = false;
+
+        #endregion
+
         private static GameManager _instance;
         public static GameManager Instance
         {
@@ -47,8 +53,8 @@ namespace PIAPS_Game.GameLogic
 
             set
             {
-                if (value > Deck.Size)
-                    _playerCardsReciveCount = Deck.Size;
+                if (value > Deck.Size.X)
+                    _playerCardsReciveCount = Deck.Size.X;
                 else
                     _playerCardsReciveCount = value;
             }
@@ -66,7 +72,7 @@ namespace PIAPS_Game.GameLogic
             protected set => _field = value;
         }
 
-        private Card.AbstractCard reciveCard()
+        private Card.AbstractCard receiveCard()
         {
             if (_builders.Count == 0)
             {
@@ -89,16 +95,27 @@ namespace PIAPS_Game.GameLogic
             Settings.Window.MouseMoved += (sender, args) => card.MouseMoved(args);   
             card.AddListener(Deck);
             card.AddListener(Field);
+            
+            var cards =  GameManager.Instance.Deck.GetCardsOnPosition(new Vector2i(-1, 0), new (Deck.Size.X, 0)).ConvertAll(x => x.MapPosition.X);
+            for (int i = 0; i < Deck.Size.X; i++)
+            {
+                
+                if (GameManager.Instance.Deck.GetCardOnPosition(new Vector2i(i, 0)) == null)
+                {
+                    card.MapPosition = new Vector2i(i, 0);
+                    break;
+                }
+            }
             return card;
         }
 
         public void StartGame()
         {
             
-            for (int i = 0; i < Deck.Size; i++)
+            for (int i = 0; i < Deck.Size.X; i++)
             {
 
-                Deck.Cards.Add(reciveCard());
+                Deck.Cards.Add(receiveCard());
                 
             }
 
@@ -108,7 +125,7 @@ namespace PIAPS_Game.GameLogic
         {
             for (int i = 0; i < PlayerCardsReciveCount; i++)
             {
-                Deck.Cards.Add(reciveCard());
+                Deck.Cards.Add(receiveCard());
             }
         }
 

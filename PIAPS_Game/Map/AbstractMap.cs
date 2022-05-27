@@ -9,7 +9,6 @@ public abstract class AbstractMap : EventListener
 {
     public List<AbstractCard> Cards = new List<AbstractCard>();
     public MapView View;
-    public abstract void Update<TSender, TEventArgs>(TSender sender, TEventArgs eventArgs);
 
     public List<AbstractCard> GetCardsOnPosition(Vector2i currentPosition, Vector2i wantedPosition)
     {
@@ -24,8 +23,8 @@ public abstract class AbstractMap : EventListener
         if (horizontal)
             cards = Cards
                 .Where(c =>
-                    c.MapPosition.X > pos.Max(c => c.X) &&
-                    c.MapPosition.X <= pos.Min(c => c.X) &&
+                    c.MapPosition.X > pos.Min(c => c.X) &&
+                    c.MapPosition.X <= pos.Max(c => c.X) &&
                     c.MapPosition.Y == currentPosition.Y)
                 .ToList();
         else
@@ -45,4 +44,5 @@ public abstract class AbstractMap : EventListener
         return card;
     }
 
+    public abstract void Update(AbstractCard sender, CardState eventArgs);
 }

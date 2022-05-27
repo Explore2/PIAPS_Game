@@ -71,11 +71,18 @@ public class CardView : Transformable, Drawable
         set => prevPosition = value;
     }
 
-    public new Vector2f Size
+    public Vector2f Size
     {
         get => size;
         set => size = value;
     }
+
+    public Text HpText
+    {
+        get => hpText;
+        set => hpText = value;
+    }
+
     #endregion
 
     #region methods
@@ -90,7 +97,7 @@ public class CardView : Transformable, Drawable
 
         back.Texture = new Texture(backImage);
         front.Texture = new Texture(frontImage);
-        hpText = new Text(HP.ToString(), font, fontSize);
+        HpText = new Text(HP.ToString(), font, fontSize);
         hpText.FillColor = Color.Black;
         hpText.Position = textXOffset + (textYOffset*1);
         damageText = new Text(Damage.ToString(), font, fontSize);

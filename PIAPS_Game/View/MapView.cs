@@ -9,7 +9,7 @@ public class MapView: Transformable, Drawable
     
     private Vector2f position;
     private Vector2f size;
-    private Vector2u length;
+    public Vector2u length;
     private Vector2f cellSize;
     private RectangleShape background;
     private List<RectangleShape> cells = new List<RectangleShape>();

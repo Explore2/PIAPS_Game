@@ -16,7 +16,8 @@ public abstract class AbstractCard : EventRaiser
     protected Vector2i _mapPosition;
     protected bool _isEnemy;
     public CardView View;
-    private bool isSelected = false;
+    public bool IsSelected { get; private set; } = false;
+
     public bool IsEnemy
     {
         get => _isEnemy;
@@ -47,7 +48,9 @@ public abstract class AbstractCard : EventRaiser
     public int HP
     {
         get => _hp;
-        set => _hp = value;
+        set { _hp = value;
+            if (View != null) View.HpText.DisplayedString = value.ToString();
+        }
     }
 
     public int Damage
@@ -78,7 +81,7 @@ public abstract class AbstractCard : EventRaiser
     {
         HP -= damage;
         if (HP < 0)
-            Notify(State);
+            Notify(this,State);
     }
     
     
@@ -87,7 +90,7 @@ public abstract class AbstractCard : EventRaiser
         if(State == CardState.InMap) return;
         if(View.Contains(e.X, e.Y) && e.Button == Mouse.Button.Left)
         {
-            isSelected = true;
+            IsSelected = true;
             View.grabOffset = new Vector2f(e.X - View.Position.X, e.Y - View.Position.Y);
             View.PrevPosition = View.Position;
             View.Scale = new Vector2f(1.2f, 1.2f);
@@ -95,22 +98,24 @@ public abstract class AbstractCard : EventRaiser
     }
     public void MouseMoved(MouseMoveEventArgs e)
     {
-        if (isSelected)
+        if (IsSelected)
             View.Position = new Vector2f(e.X, e.Y) - View.grabOffset;
     }
     public void MouseReleased(MouseButtonEventArgs e)
     {
-        if (isSelected && e.Button == Mouse.Button.Left)
+        if (IsSelected && e.Button == Mouse.Button.Left)
         { 
             View.Scale = new Vector2f(1f, 1f);
             View.grabOffset = new Vector2f(0, 0);
-            isSelected = false;
+            IsSelected = false;
             var field = GameManager.Instance.Field;
             if(field.View.Contains(e.X, e.Y))
             {
                 var coords = field.View.CellContains(e.X, e.Y);
-                if (coords is { Y: 3 })
+                bool isFree = field.GetCardOnPosition((Vector2i)coords) == null;
+                if (coords.Value.Y == field.View.length.Y - 1 && isFree)
                 {
+                    Notify(this ,State);
                     State = CardState.InMap;
                     MapPosition = (Vector2i)coords;
                     return;
