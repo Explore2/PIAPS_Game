@@ -11,7 +11,14 @@ public abstract class AbstractCard : EventRaiser
     protected int _damage;
     protected int _cost;
     protected Vector2i _mapPosition;
+    protected bool _isEnemy;
 
+
+    public bool IsEnemy
+    {
+        get => _isEnemy;
+        set => _isEnemy = value;
+    }
 
 
     public Vector2i MapPosition
