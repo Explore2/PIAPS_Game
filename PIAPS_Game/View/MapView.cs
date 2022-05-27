@@ -65,7 +65,7 @@ public class MapView: Transformable, Drawable
             {
                 cells.Add(new RectangleShape(CellSize)
                 {
-                    Texture = new Texture(new Image(Settings.ResourcesPath + @"\CellTexture.png")),
+                    Texture = new Texture(new Image(Settings.ResourcesPath + @"/CellTexture.png")),
                     //FillColor = Color.Transparent,
                     //OutlineColor = foregroundColor,
                     //OutlineThickness = 2f,

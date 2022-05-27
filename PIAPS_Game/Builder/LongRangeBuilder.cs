@@ -31,16 +31,16 @@ public class LongRangeBuilder : Builder
 
     public void SetTexture()
     {
-        string foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\longRange.png";
+        string foreImagePath = @$"{Settings.ResourcesPath}/BaseCardIcons/longRange.png";
         #region 
         if (GameManager.isCreatingEnemy)
         {
             _card.IsEnemy = true;
-            foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\longRangeEnemy.png";
+            foreImagePath = @$"{Settings.ResourcesPath}/BaseCardIcons/longRangeEnemy.png";
         }
         #endregion
-        string backImagePath = @$"{Settings.ResourcesPath}\backcard.png";
-        _card.View = new CardView(new Vector2f(100, 150),  new Image(backImagePath), new Image(foreImagePath), _card.HP, _card.Damage,
+        string backImagePath = @$"{Settings.ResourcesPath}/backcard.png";
+        _card.View = new CardView(new Vector2f(146, 220),  new Image(backImagePath), new Image(foreImagePath), _card.HP, _card.Damage,
             _card.Cost);
     }
 

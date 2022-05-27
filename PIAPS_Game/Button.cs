@@ -6,6 +6,7 @@ namespace PIAPS_Game;
 
 public class Button : Transformable, Drawable
 {
+    // /Users/leonid/RiderProjects/PIAPS_Game/PIAPS_Game/Resources/CellTexture.png
     #region fields
 
     private RectangleShape button;
