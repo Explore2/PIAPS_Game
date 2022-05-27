@@ -12,7 +12,6 @@ public class SplashCard : AbstractCard
         int moveSign = !IsEnemy ? -1 : 1;
 
 
-        Console.WriteLine($"Начинаю ходить с {MapPosition.ToString()}");
         Vector2i wantedMove = new Vector2i(MapPosition.X, MapPosition.Y + (moveSign));
 
 
@@ -54,9 +53,8 @@ public class SplashCard : AbstractCard
         bool success = false;
         int moveSign = (!IsEnemy ? -1 : 1);
 
-        Vector2i attackPosition1 = new Vector2i(MapPosition.X-2, MapPosition.Y + moveSign);
+        Vector2i attackPosition1 = new Vector2i(MapPosition.X-1, MapPosition.Y + moveSign);
         Vector2i attackPosition2 = new Vector2i(MapPosition.X + 1, MapPosition.Y + moveSign);
-        Console.WriteLine($"Атакую от {attackPosition1} до {attackPosition2}");
 
 
 
@@ -69,18 +67,17 @@ public class SplashCard : AbstractCard
             {
                 success = true;
                 enemy.ReceiveDamage(Damage);
-                Console.WriteLine($"Нанёс {Damage} урона");
  
             }
         }
 
-        if (IsEnemy && attackPosition1.Y < 0)
-        {
-            GameManager.Instance.PlayerHP -= Damage * 3;
-        }
-        else if (!IsEnemy && attackPosition1.Y >= GameManager.Instance.Field.Size.Y)
+        if (!IsEnemy && attackPosition1.Y < 0)
         {
             GameManager.Instance.EnemyHP -= Damage * 3;
+        }
+        else if (IsEnemy && attackPosition1.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            GameManager.Instance.PlayerHP -= Damage * 3;
         }
 
 

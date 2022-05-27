@@ -29,14 +29,14 @@ public abstract class AbstractMap : EventListener
         if (horizontal)
             cards = Cards
                 .Where(c =>
-                    c.MapPosition.X > pos.Min(c => c.X) &&
+                    c.MapPosition.X >= pos.Min(c => c.X) &&
                     c.MapPosition.X <= pos.Max(c => c.X) &&
                     c.MapPosition.Y == currentPosition.Y)
                 .ToList();
         else
             cards = Cards
                 .Where(c =>
-                    c.MapPosition.Y < pos.Max(c => c.Y) &&
+                    c.MapPosition.Y <= pos.Max(c => c.Y) &&
                     c.MapPosition.Y >= pos.Min(c => c.Y) &&
                     c.MapPosition.X == currentPosition.X)
                 .ToList();

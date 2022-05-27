@@ -12,7 +12,7 @@ public class CloseRangeCard : AbstractCard
         int moveSign = !IsEnemy ? -1 : 1;
 
 
-        Console.WriteLine($"Начинаю ходить с {MapPosition.ToString()}");
+
         Vector2i wantedMove = new Vector2i(MapPosition.X, MapPosition.Y + (2 * moveSign) );
 
 
@@ -44,7 +44,6 @@ public class CloseRangeCard : AbstractCard
             MapPosition = wantedMove;
         }
 
-        Console.WriteLine($"Пришёл в {MapPosition.ToString()}");
 
         return success;
     }
@@ -55,18 +54,19 @@ public class CloseRangeCard : AbstractCard
         int moveSign = (!IsEnemy ? -1 : 1);
         
         Vector2i attackPosition = new Vector2i(MapPosition.X,MapPosition.Y + (moveSign) );
-        Console.WriteLine($"Атакую по {attackPosition}");
-        if(IsEnemy && attackPosition.Y < 0)
-        {
-            GameManager.Instance.PlayerHP -= Damage;
-            return true;
-        }
-        else if (!IsEnemy && attackPosition.Y >= GameManager.Instance.Field.Size.Y)
+
+        if (!IsEnemy && attackPosition.Y < 0)
         {
             GameManager.Instance.EnemyHP -= Damage;
             return true;
         }
-            
+        else if (IsEnemy && attackPosition.Y >= GameManager.Instance.Field.Size.Y)
+        {
+            GameManager.Instance.PlayerHP -= Damage;
+            return true;
+        }
+
+
 
         AbstractCard target = GameManager.Instance.Field.GetCardOnPosition(attackPosition);
 
@@ -74,7 +74,6 @@ public class CloseRangeCard : AbstractCard
         {
             success = true;
             target.ReceiveDamage(Damage);
-            Console.WriteLine($"Нанёс {Damage} урона");
         }
 
         return success;
