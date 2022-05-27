@@ -29,8 +29,11 @@ public class SplashBuilder : Builder
     }
 
     public void SetTexture()
-    {
-        string foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\splash.png";
+    { string foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\splash.png";
+        if (_card.IsEnemy)
+        {
+            foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\splash.png";
+        }
         string backImagePath = @$"{Settings.ResourcesPath}\backcard.png";
         _card.View = new CardView(new Vector2f(100, 150),  new Image(backImagePath), new Image(foreImagePath), _card.HP, _card.Damage,
             _card.Cost);
