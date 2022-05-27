@@ -7,9 +7,14 @@ namespace PIAPS_Game.Map;
 
 public abstract class AbstractMap : EventListener
 {
+    #region Fields
+
     public List<AbstractCard> Cards = new List<AbstractCard>();
     public MapView View;
-    public abstract void Update<TSender, TEventArgs>(TSender sender, TEventArgs eventArgs);
+
+    #endregion
+
+    #region Methods
 
     public List<AbstractCard> GetCardsOnPosition(Vector2i currentPosition, Vector2i wantedPosition)
     {
@@ -31,9 +36,9 @@ public abstract class AbstractMap : EventListener
         else
             cards = Cards
                 .Where(c =>
-                c.MapPosition.Y < pos.Max(c => c.Y) &&
-                c.MapPosition.Y >= pos.Min(c => c.Y) &&
-                c.MapPosition.X == currentPosition.X)
+                    c.MapPosition.Y < pos.Max(c => c.Y) &&
+                    c.MapPosition.Y >= pos.Min(c => c.Y) &&
+                    c.MapPosition.X == currentPosition.X)
                 .ToList();
 
         return cards;
@@ -45,4 +50,9 @@ public abstract class AbstractMap : EventListener
         return card;
     }
 
+    public abstract void Update(AbstractCard sender, CardState eventArgs);
+
+    #endregion
+
+    
 }

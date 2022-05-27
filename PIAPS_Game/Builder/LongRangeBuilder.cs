@@ -1,4 +1,5 @@
 ﻿using PIAPS_Game.Card;
+using PIAPS_Game.GameLogic;
 using PIAPS_Game.View;
 using SFML.Graphics;
 using SFML.System;
@@ -31,6 +32,13 @@ public class LongRangeBuilder : Builder
     public void SetTexture()
     {
         string foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\longRange.png";
+        #region 
+        if (GameManager.isCreatingEnemy)
+        {
+            _card.IsEnemy = true;
+            foreImagePath = @$"{Settings.ResourcesPath}\BaseCardIcons\longRangeEnemy.png";
+        }
+        #endregion
         string backImagePath = @$"{Settings.ResourcesPath}\backcard.png";
         _card.View = new CardView(new Vector2f(100, 150),  new Image(backImagePath), new Image(foreImagePath), _card.HP, _card.Damage,
             _card.Cost);

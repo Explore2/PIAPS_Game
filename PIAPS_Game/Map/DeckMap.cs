@@ -1,4 +1,5 @@
-﻿using PIAPS_Game.View;
+﻿using PIAPS_Game.Card;
+using PIAPS_Game.View;
 using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
@@ -7,9 +8,9 @@ namespace PIAPS_Game.Map;
 
 public class DeckMap : AbstractMap
 {
-    protected int _size;
+    protected Vector2i _size;
     
-    public int Size
+    public Vector2i Size
     {
         get => _size;
         protected set => _size = value;
@@ -19,16 +20,16 @@ public class DeckMap : AbstractMap
 
     public DeckMap(int size)
     {
-        Size = size;
+        Size = new Vector2i(size, 1);
         View = new MapView(Settings.Window.Size.X/1.5f, new Vector2u((uint)size, 1), Color.Transparent, Color.Transparent);
         View.Position = new Vector2f(Settings.Window.Size.X / 2 - View.Size.X / 2, Settings.Window.Size.Y - View.Size.Y);
     }
 
-
-
-
-    public override void Update<TSender, TEventArgs>(TSender sender, TEventArgs eventArgs)
+    public override void Update(AbstractCard sender, CardState eventArgs)
     {
-        throw new NotImplementedException();
+        if (eventArgs == CardState.InDeck)
+        {
+            Cards.Remove(sender);
+        }
     }
 }

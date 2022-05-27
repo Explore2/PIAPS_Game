@@ -9,10 +9,11 @@ namespace PIAPS_Game.View;
 
 public class CardView : Transformable, Drawable
 {
-    #region fields
+    #region Fields
     private Vector2f position = new Vector2f(0, 0);
     private Vector2f prevPosition = new Vector2f(0, 0);
     private Vector2f scale = new Vector2f(1, 1);
+    private Vector2f prevScale = new Vector2f(1, 1);
     private Vector2f size;
     
     private RectangleShape back;
@@ -23,12 +24,11 @@ public class CardView : Transformable, Drawable
     private Vector2f textXOffset;
     private Vector2f textYOffset;
     private uint fontSize;
-    //TODO Reference font in settings 
-    private Font font = new Font(Settings.ResourcesPath + @"/Fonts/arial.ttf"); 
+    private Font font = new Font($"{Settings.ResourcesPath}/Fonts/arial.ttf"); 
     public Vector2f grabOffset = new Vector2f(0, 0);
     #endregion
-
-    #region properties
+    
+    #region Properties
     public new Vector2f Position
     {
         get => position;
@@ -71,14 +71,27 @@ public class CardView : Transformable, Drawable
         set => prevPosition = value;
     }
 
-    public new Vector2f Size
+    public Vector2f PrevScale
+    {
+        get => prevScale;
+        set => prevScale = value;
+    }
+
+    public Vector2f Size
     {
         get => size;
         set => size = value;
     }
+
+    public Text HpText
+    {
+        get => hpText;
+        set => hpText = value;
+    }
+
     #endregion
 
-    #region methods
+    #region Methods
     public CardView(Vector2f size, Image backImage, Image frontImage, int HP, int Damage, int Cost)
     {
         back = new RectangleShape(size); 
@@ -90,7 +103,7 @@ public class CardView : Transformable, Drawable
 
         back.Texture = new Texture(backImage);
         front.Texture = new Texture(frontImage);
-        hpText = new Text(HP.ToString(), font, fontSize);
+        HpText = new Text(HP.ToString(), font, fontSize);
         hpText.FillColor = Color.Black;
         hpText.Position = textXOffset + (textYOffset*1);
         damageText = new Text(Damage.ToString(), font, fontSize);

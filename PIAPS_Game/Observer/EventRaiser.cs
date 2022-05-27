@@ -1,4 +1,6 @@
 ﻿
+using PIAPS_Game.Card;
+
 namespace PIAPS_Game.Observer;
 
 public abstract class EventRaiser
@@ -15,11 +17,11 @@ public abstract class EventRaiser
         Listeners.Remove(listener);
     }
 
-    public void Notify<T>(T EventArgs)
+    public void Notify(AbstractCard sender, CardState EventArgs)
     {
         foreach (var listener in Listeners)
         {
-            listener.Update(this, EventArgs);
+            listener.Update(sender ,EventArgs);
         }
     }
 }
