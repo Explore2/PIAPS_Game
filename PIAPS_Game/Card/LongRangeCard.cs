@@ -1,9 +1,11 @@
-﻿namespace PIAPS_Game.Card;
+﻿using PIAPS_Game.View;
+
+namespace PIAPS_Game.Card;
 
 public class LongRangeCard : AbstractCard
 {
     //Some kind of view here
-    
+
     protected override bool Move()
     {
         throw new NotImplementedException();

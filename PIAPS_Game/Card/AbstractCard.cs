@@ -1,4 +1,5 @@
 ﻿using PIAPS_Game.Observer;
+using PIAPS_Game.View;
 using EventListener = System.Diagnostics.Tracing.EventListener;
 
 namespace PIAPS_Game.Card;
@@ -9,6 +10,7 @@ public abstract class AbstractCard : EventRaiser
     protected int _hp;
     protected int _damage;
     protected int _cost;
+    public CardView View;
 
     public int HP
     {
