@@ -5,3 +5,10 @@ public enum CardState
     InDeck,
     InMap
 }
+
+public enum GameStatus
+{
+    Win,
+    Lose,
+    Play,
+}

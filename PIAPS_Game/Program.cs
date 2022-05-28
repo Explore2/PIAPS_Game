@@ -22,52 +22,67 @@ window.MouseButtonPressed += button.OnButtonPress;
 window.MouseButtonReleased += button.OnButtonRelease;
 window.Closed += (s,e) =>  window.Close();
 window.MouseButtonReleased += (s, e) => MouseReleased(e);
-window.SetFramerateLimit(30);
 GameManager.Instance.EnemyReciveCards();
 
 while (window.IsOpen)
 {
     
     window.DispatchEvents();
-    window.Clear(Settings.BackgroundColor);
-
-    
-    
-    window.Draw(GameManager.Instance.Deck.View);
-    window.Draw(GameManager.Instance.Field.View);
-
-    
-
-    foreach (var card in GameManager.Instance.Deck.Cards)
-    {
-        window.Draw(card.View);
-    }
-    foreach (var card in GameManager.Instance.Field.Cards)
-    {
-        window.Draw(card.View);
-    }
-
-    var selectedCard = GameManager.Instance.Deck.Cards.Find(x => x.IsSelected);
-    if(!(selectedCard is null))
-        window.Draw(selectedCard.View);
-    window.Draw(button);
-    window.Display();
+    DrawCall();
     if (endTurn)
     {
-        
         endTurn = false;
         GameManager.Instance.CastleDamage();
         GameManager.Instance.PlayersTurn();
+        DrawCall();
+        System.Threading.Thread.Sleep(500);
+        //Sleep(500);
         GameManager.Instance.PlayerReciveCards();
         GameManager.Instance.EnemyTurn();
+        DrawCall();
+        System.Threading.Thread.Sleep(500);
+        //Sleep(500);
         GameManager.Instance.EnemyReciveCards();
+        DrawCall();
+        //Sleep(500);
+        System.Threading.Thread.Sleep(500);
         
-
     }
+}
+
+void DrawCall()
+    {
+        window.Clear(Settings.BackgroundColor);
+        if (GameManager.Instance.GameState != GameStatus.Play) 
+        {
+        window.Draw(GameManager.Instance.EndGamePopup);
+        window.Display(); 
+        }
+    else
+    {
+        window.Draw(GameManager.Instance.Deck.View);
+        window.Draw(GameManager.Instance.Field.View);
+        window.Draw(GameManager.Instance.EnemyCastle);
+        window.Draw(GameManager.Instance.PlayerCastle);
+
+
+        foreach (var card in GameManager.Instance.Deck.Cards)
+        {
+            window.Draw(card.View);
+        }
+
+        foreach (var card in GameManager.Instance.Field.Cards)
+        {
+            window.Draw(card.View);
+        }
+
+        var selectedCard = GameManager.Instance.Deck.Cards.Find(x => x.IsSelected);
+        if (!(selectedCard is null))
+            window.Draw(selectedCard.View);
+        window.Draw(button);
+        window.Display();
         
-
-
-    
+    }
 }
 
 void MouseReleased(MouseButtonEventArgs e)

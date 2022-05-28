@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PIAPS_Game.Map;
+using PIAPS_Game.View;
+using SFML.Graphics;
 using SFML.System;
 
 namespace PIAPS_Game.GameLogic
@@ -12,12 +14,11 @@ namespace PIAPS_Game.GameLogic
 
     internal class GameManager
     {
-        #region 
+        #region . 
 
         public static bool isCreatingEnemy = false;
 
-        #endregion
-
+        #endregion 
         private static GameManager _instance;
         public static GameManager Instance
         {
@@ -36,18 +37,21 @@ namespace PIAPS_Game.GameLogic
         const int ELITEPROC = 70;
 
 
-
+        public GameStatus GameState = GameStatus.Win;
+        public EndGamePopup EndGamePopup = new EndGamePopup();
         protected int _playerHP = 300;
         protected int _enemyHP = 300;
-       
+        protected int _castleDamage = 20;
         protected int _playerCardsReciveCount = 1;
         protected Map.DeckMap _deck = new Map.DeckMap();
         protected Map.GameMap _field = new Map.GameMap();
         protected List<Builder.Builder> _builders = new List<Builder.Builder>(); 
         protected CardCreator _creator = new CardCreator();
-        
-        private Random _random = new Random();
 
+        public CardView EnemyCastle;
+        public Text PlayerCastle;
+        private Random _random = new Random();
+        
         public int PlayerCardsReciveCount
         {
             get { return _playerCardsReciveCount; }
@@ -77,17 +81,21 @@ namespace PIAPS_Game.GameLogic
         public int PlayerHP { get { return _playerHP; } set 
             {
                 _playerHP = value;
-                if (_playerHP < 0)
-                    Console.WriteLine("U suck");
-                Console.WriteLine($" player HP {value}");
+                PlayerCastle.DisplayedString = value.ToString();
+                if (_playerHP <= 0)
+                {
+                    GameState = GameStatus.Lose;
+                }
             }
         }
         public int EnemyHP { get { return _enemyHP; } set 
             {
                 _enemyHP = value;
-                if (_enemyHP < 0)
-                    Console.WriteLine("U win LOOSER");
-                Console.WriteLine($" Enemy HP {value}");
+                EnemyCastle.HpText.DisplayedString = value.ToString();
+                if (_enemyHP <= 0)
+                {
+                    GameState = GameStatus.Win;
+                }
             }
         }
 
@@ -111,27 +119,52 @@ namespace PIAPS_Game.GameLogic
             else
                 card = _creator.CreateCard();
             Settings.Window.MouseButtonPressed += (sender, args) => card.MousePressed(args);
-            Settings.Window.MouseButtonReleased += (sender, args) => card.MouseReleased(args); 
+            Settings.Window.MouseButtonReleased += (sender, args) => card.MouseReleased(args);
             Settings.Window.MouseMoved += (sender, args) => card.MouseMoved(args);
-            card.View.Scale =  new Vector2f(_deck.View.CellSize.Y / card.View.Size.Y,_deck.View.CellSize.Y / card.View.Size.Y);
+            if(!isCreatingEnemy)
+                card.View.Scale = new Vector2f(_deck.View.CellSize.Y / card.View.Size.Y,
+                    _deck.View.CellSize.Y / card.View.Size.Y);
             card.AddListener(Deck);
             card.AddListener(Field);
-            
+
             for (int i = 0; i < Deck.Size.X; i++)
             {
-                
+
                 if (GameManager.Instance.Deck.GetCardOnPosition(new Vector2i(i, 0)) == null)
                 {
                     card.MapPosition = new Vector2i(i, 0);
                     break;
                 }
             }
+
             return card;
+        }
+
+        public void ShowWinLose(GameStatus status)
+        {
+            
         }
 
         public void StartGame()
         {
-            
+            GameState = GameStatus.Play;
+            _playerHP = 300;
+            _enemyHP = 300;
+            Deck = new DeckMap();
+            Field = new GameMap();
+            PlayerCastle = new Text();
+            PlayerCastle.Font = new Font($"{Settings.ResourcesPath}/Fonts/Arial.ttf");
+            PlayerCastle.DisplayedString = PlayerHP.ToString();
+            PlayerCastle.CharacterSize = 100;
+            PlayerCastle.FillColor = Color.Black;
+            PlayerCastle.Position = new Vector2f(Settings.Window.Size.X / 2 - PlayerCastle.GetGlobalBounds().Width / 2,
+                Settings.Window.Size.Y - Deck.View.Size.Y - PlayerCastle.GetGlobalBounds().Height - 50);
+            EnemyCastle = new CardView(new Vector2f(166, 250),
+                new Image($"{Settings.ResourcesPath}/backcard.png"),
+                new Image($"{Settings.ResourcesPath}/BaseCardIcons/castle.png"), _enemyHP, _castleDamage, 100);
+            EnemyCastle.Position = new Vector2f(Settings.Window.Size.X / 2 - EnemyCastle.Size.X / 2,
+                0);
+
             for (int i = 0; i < Deck.Size.X; i++)
             {
 
@@ -182,7 +215,7 @@ namespace PIAPS_Game.GameLogic
                     card.MapPosition = position;
                 else
                     continue;
-
+                
                 Field.Cards.Add(card);
             }
             #region .
