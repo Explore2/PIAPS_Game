@@ -159,7 +159,7 @@ namespace PIAPS_Game.GameLogic
             PlayerCastle.FillColor = Color.Black;
             PlayerCastle.Position = new Vector2f(Settings.Window.Size.X / 2 - PlayerCastle.GetGlobalBounds().Width / 2,
                 Settings.Window.Size.Y - Deck.View.Size.Y - PlayerCastle.GetGlobalBounds().Height - 50);
-            EnemyCastle = new CardView(new Vector2f(166, 250),
+            EnemyCastle = new CardView(new Vector2f(100, 150),
                 new Image($"{Settings.ResourcesPath}/backcard.png"),
                 new Image($"{Settings.ResourcesPath}/BaseCardIcons/castle.png"), _enemyHP, _castleDamage, 100);
             EnemyCastle.Position = new Vector2f(Settings.Window.Size.X / 2 - EnemyCastle.Size.X / 2,

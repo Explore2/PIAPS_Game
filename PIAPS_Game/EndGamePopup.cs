@@ -22,7 +22,7 @@ public class EndGamePopup : Transformable, Drawable
         endGame.FillColor = Color.Black;
         background = new RectangleShape((Vector2f) Settings.Window.Size);
         background.FillColor = Settings.BackgroundColor;
-        restartButton = new Button(new Vector2f(600, 200), new Image(Settings.ResourcesPath+"/buttonNextTurn.png"));
+        restartButton = new Button(new Vector2f(300, 100), new Image(Settings.ResourcesPath+"/buttonNextTurn.png"));
         restartButton.Position = new Vector2f(Settings.Window.Size.X/2 - restartButton.Size.X / 2,
             Settings.Window.Size.Y/2 - restartButton.Size.Y/2);
     }
